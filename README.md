@@ -37,7 +37,8 @@ When an **emergency vehicle signal** is detected:
 ---
 
 ## 🧠 Block Diagram
-*(You can attach your block diagram image here)*
+<img width="1024" height="1024" alt="Gemini_Generated_Image_qq5gaeqq5gaeqq5g" src="https://github.com/user-attachments/assets/3b3bad74-e556-42be-9006-f3455cf6ff1a" />
+
 
 ```
 [Sensor Inputs] → [Control Logic Unit] → [Timing Controller] → [LED Outputs]
