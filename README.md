@@ -64,25 +64,6 @@ When an **emergency vehicle signal** is detected:
 
 ---
 
-## 💻 Project Structure
-```
-traffic_light_controller_fpga/
-│
-├── src/
-│   ├── traffic_controller.v          # Main Verilog code
-│   └── traffic_controller_tb.v       # Testbench code
-│
-├── simulation/
-│   ├── waveform_screenshot.png       # Simulation waveform
-│   └── simulation_log.txt            # Optional logs
-│
-├── docs/
-│   ├── block_diagram.png             # Optional diagram
-│   └── project_description.md        # Additional notes
-│
-└── README.md                         # Main GitHub report (this file)
-```
-
 ---
 
 ## 🧾 Verilog Design Description
