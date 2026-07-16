@@ -182,13 +182,13 @@ endmodule
 ---
 
 ## 📈 Simulation Results
-
-### ✅ Observed Behavior
-| Mode | Expected Output |
-|------|-----------------|
-| Normal | RED → GREEN → YELLOW → RED |
-| Emergency | GREEN overrides immediately |
-| Post-Emergency | Returns to normal cycle |
+ 
+| Phase | Expected Behavior |
+|-------|--------------------|
+| Reset | Highway Green, Country Red (S0) |
+| Vehicle arrives | S0 → S1 (Yellow) → S2 (Red) after two 1-second holds |
+| Country road active | S3: Highway Red, Country Green until vehicle clears |
+| Vehicle leaves | S3 → S4 (Country Yellow) → back to S0 |
 
 ### 📸 Example Waveform Output
 ![WhatsApp Image 2025-10-27 at 15 32 40_2ee2595c](https://github.com/user-attachments/assets/c5df64f6-a161-4d06-acb6-343ddde9ffa7)
@@ -217,10 +217,9 @@ ZOOM IN VIEW:
 ---
 
 ## 🔍 Key Learnings
-- Gained hands-on experience with **FPGA design flow**.  
-- Understood **behavioral modeling** in Verilog.  
-- Learned to **simulate and debug digital circuits** using Vivado.  
-- Explored how **priority-based control systems** work in real-world traffic management.
+- Hands-on experience with the FPGA design flow: RTL → simulation → constraints → bitstream.
+- Debugged switch bounce, clock-speed-related invisible intermediate states, and active-high vs. active-low LED logic on real hardware.
+- Learned to combine three discrete LED signals into a single RGB output bus and update both the constraints file and the module port list in tandem.
 
 ---
 
