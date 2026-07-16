@@ -214,9 +214,6 @@ DEVICE LAYOUT AFTER IMPLEMENTATION
 <img width="1631" height="987" alt="image" src="https://github.com/user-attachments/assets/5f06ff12-a46d-40b9-b6a2-07cb670de9a0" />
 
 
-ZOOM IN VIEW:
-![WhatsApp Image 2025-10-27 at 15 59 28_20202a8e](https://github.com/user-attachments/assets/6a752554-bd3e-4681-88c2-b541d169e830)
-
 
 ---
 
