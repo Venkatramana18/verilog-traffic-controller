@@ -33,8 +33,9 @@ After S4, the FSM returns to S0 and the highway goes green again.
 
 ---
 
-## 🧠 Block Diagram
-<img width="1024" height="1024" alt="Gemini_Generated_Image_qq5gaeqq5gaeqq5g" src="https://github.com/user-attachments/assets/3b3bad74-e556-42be-9006-f3455cf6ff1a" />
+## 🧠 State Diagram
+<img width="1440" height="780" alt="image" src="https://github.com/user-attachments/assets/20cd1880-e55e-4c4d-b205-231042cf766c" />
+
 
 ```
 [Vehicle Sensor] → [FSM Control Logic] → [Timing Counter] → [RGB LED Outputs]
