@@ -235,6 +235,6 @@ This design can be extended to include **pedestrian crossing states**, **multipl
 Department of Electronics and Communication Engineering  
 Saveetha Engineering College, Chennai  
 
-📧 **Email:** [arunachalam862005@gmail.com](mailto:sbvenkatramana@gmail.com)  
+📧 **Email:** [sbvenkatramana@gmail.com](mailto:sbvenkatramana@gmail.com)  
 📅 **Batch:** 2024–2028
 ⭐ *Project developed and simulated using Xilinx Vivado 2025.1*
