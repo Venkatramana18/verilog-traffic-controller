@@ -1,7 +1,7 @@
 # 🚦FPGA-Based Traffic Light Controller (Highway / Country Road Intersection)
 
 ## 🧠 Project Overview
-This project implements a **vehicle-triggered traffic light controller** for a highway/country-road intersection using Verilog HDL on a Xilinx Spartan-7 FPGA (Arty S7-50).
+This project implements a **vehicle-triggered traffic light controller** for a highway/country-road intersection using Verilog HDL on a Xilinx Spartan-7 FPGA.
 
 Unlike a simple fixed-timer traffic light, this design uses a vehicle sensor input to decide when the country road gets a green light, so the highway stays green by default and only yields when a vehicle is actually waiting. The design is implemented, simulated, and verified in Xilinx Vivado.
 
@@ -203,13 +203,16 @@ You can open it via:
 `Flow Navigator → Synthesis → Open Synthesized Design → RTL Analysis`.
 
 RTL SCHEMATIC DIAGRAM:
-![WhatsApp Image 2025-10-27 at 15 40 02_8dd4b0f3](https://github.com/user-attachments/assets/4a3cc3be-38a9-4e6c-862a-b54cb7d026d4)
+<img width="1630" height="992" alt="image" src="https://github.com/user-attachments/assets/42951caa-5038-40a9-930a-67af9885cfbf" />
+
 
 RTL SCHEMATIC DIAGRAM AFTER SYNTHESIS:
-![WhatsApp Image 2025-10-27 at 16 11 21_2a17c467](https://github.com/user-attachments/assets/143ae31d-1ad1-4eb0-a9df-b30ace76a77d)
+<img width="1630" height="997" alt="image" src="https://github.com/user-attachments/assets/084cc7e2-be5e-4f43-9232-0a150462ff07" />
+
 
 DEVICE LAYOUT AFTER IMPLEMENTATION
-![WhatsApp Image 2025-10-27 at 16 01 40_6f30e804](https://github.com/user-attachments/assets/362f628c-7f19-4748-bcab-9cdc372ebc7d)
+<img width="1631" height="987" alt="image" src="https://github.com/user-attachments/assets/5f06ff12-a46d-40b9-b6a2-07cb670de9a0" />
+
 
 ZOOM IN VIEW:
 ![WhatsApp Image 2025-10-27 at 15 59 28_20202a8e](https://github.com/user-attachments/assets/6a752554-bd3e-4681-88c2-b541d169e830)
