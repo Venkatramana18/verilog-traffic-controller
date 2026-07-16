@@ -191,7 +191,8 @@ endmodule
 | Vehicle leaves | S3 → S4 (Country Yellow) → back to S0 |
 
 ### 📸 Example Waveform Output
-![WhatsApp Image 2025-10-27 at 15 32 40_2ee2595c](https://github.com/user-attachments/assets/c5df64f6-a161-4d06-acb6-343ddde9ffa7)
+<img width="1918" height="1066" alt="image" src="https://github.com/user-attachments/assets/499d690b-9aa3-4b89-afbb-7fb61127f378" />
+
 
 
 ---
