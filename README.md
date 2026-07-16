@@ -225,17 +225,16 @@ DEVICE LAYOUT AFTER IMPLEMENTATION
 ---
 
 ## 🧾 Conclusion
-The **FPGA-Based Traffic Light Controller with Priority System** was successfully designed and simulated using **Xilinx Vivado**.  
-The system correctly performed sequential light transitions and responded to emergency override conditions.  
-This design can be extended to include **multiple intersections**, **sensor integration**, and **adaptive traffic flow control** for smart city applications.
-
+The **FPGA-Based Traffic Light Controller** was successfully designed and simulated using **Xilinx Vivado**.
+The system correctly performed sequential light transitions and responded to the vehicle sensor input, holding the highway green until a vehicle was detected and returning to it once the country road cleared.
+This design can be extended to include **pedestrian crossing states**, **multiple intersections**, and **adaptive timing based on traffic density** for smart city applications.
 ---
 
 ## 🧑‍💻 Author
-**Arunachalam P**  
+**Venkat Ramana S B**  
 Department of Electronics and Communication Engineering  
 Saveetha Engineering College, Chennai  
 
 📧 **Email:** [arunachalam862005@gmail.com](mailto:arunachalam862005@gmail.com)  
-📅 **Batch:** 2023–2027  
+📅 **Batch:** 2024–2028
 ⭐ *Project developed and simulated using Xilinx Vivado 2025.1*
