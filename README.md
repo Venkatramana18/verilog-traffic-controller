@@ -180,6 +180,14 @@ module traffic_controller_tb();
 endmodule
 ```
 
+
+| Photo | State shown |
+|-------|-------------|
+| ![Board idle](docs/images/board-idle.jpg) | Board powered on, bitstream loaded, both RGB LEDs off/idle before the first vehicle trigger |
+| ![Highway green, country red](docs/images/state-s0.jpg) | `RGB0` green, `RGB1` red — S0: highway green, country road red |
+| ![Both red](docs/images/state-buffer.jpg) | Both `RGB0` and `RGB1` red — buffer state between phases |
+| ![Highway red, country green](docs/images/state-s3.jpg) | `RGB0` red, `RGB1` green — country road has the green light |
+| ![Yellow transition](docs/images/state-yellow.jpg) | `RGB0`/`RGB1` showing amber (red+green together) — a yellow transition state |
 ---
 
 ## 📈 Simulation Results
