@@ -36,132 +36,146 @@ After S4, the FSM returns to S0 and the highway goes green again.
 ## 🧠 Block Diagram
 <img width="1024" height="1024" alt="Gemini_Generated_Image_qq5gaeqq5gaeqq5g" src="https://github.com/user-attachments/assets/3b3bad74-e556-42be-9006-f3455cf6ff1a" />
 
-
 ```
-[Sensor Inputs] → [Control Logic Unit] → [Timing Controller] → [LED Outputs]
+[Vehicle Sensor] → [FSM Control Logic] → [Timing Counter] → [RGB LED Outputs]
 ```
-
+ 
 | Signal | Description |
-|---------|--------------|
-| `clk` | System clock for timing control |
-| `reset` | Asynchronous reset for restarting sequence |
-| `emergency` | Input signal from emergency vehicle detector |
-| `red`, `yellow`, `green` | Output signals driving the LEDs |
+|--------|-------------|
+| `clk` | 100 MHz system clock |
+| `reset` | Asynchronous reset, restarts sequence at S0 |
+| `x` | Vehicle sensor input (country road) |
+| `rgb1[2:0]` | Highway light — on-board RGB LED 0 (bit0=R, bit1=G, bit2=B) |
+| `rgb2[2:0]` | Country road light — on-board RGB LED 1 (bit0=R, bit1=G, bit2=B) |
 
 ---
 
 ## ⚙️ Tools & Technologies Used
+ 
 | Tool | Purpose |
-|------|----------|
-| **Xilinx Vivado 2025.1** | Design, simulation, and verification |
-| **Verilog HDL** | Hardware description and logic design |
-| **Vivado Simulator** | Functional simulation and waveform analysis |
-| **FPGA Target Board (Optional)** | Xilinx Spartan-6 / Artix-7 |
-| **GitHub** | Version control and documentation |
-
+|------|---------|
+| Xilinx Vivado | Design, simulation, synthesis, and implementation |
+| Verilog HDL | Hardware description and FSM logic |
+| Vivado Simulator | Functional simulation and waveform analysis |
+| Arty S7-50 (Spartan-7 XC7S50-CSGA324) | Target FPGA board |
+| GitHub | Version control and documentation |
 ---
 
 ---
 
 ## 🧾 Verilog Design Description
 
-### 🔹 Main Module (`traffic_controller.v`)
-This module defines the control logic for the traffic lights and includes:
-- A state machine with 3 states: `RED`, `YELLOW`, and `GREEN`.  
-- Counter logic for timing control.  
-- Priority condition for emergency override.
+### Main Module (`traffic_controller.v`)
+A 5-state Moore machine (`S0`–`S4`) with:
+- An asynchronous-reset synchronous state register.
+- A free-running counter used to time the yellow/red hold states (1 second at 100 MHz).
+- Combinational output logic mapping each state to an `rgb1`/`rgb2` color code.
 
 ```verilog
 module traffic_controller (
-    input clk,
-    input reset,
-    input emergency,
-    output reg red,
-    output reg yellow,
-    output reg green
+    input  wire clk,
+    input  wire reset,
+    input  wire x,
+    output reg [2:0] rgb1,   // highway light: [0]=R, [1]=G, [2]=B
+    output reg [2:0] rgb2    // country road light: [0]=R, [1]=G, [2]=B
 );
-
-    reg [1:0] state;
+    reg [2:0] state;
     reg [31:0] counter;
-
-    parameter RED_STATE    = 2'b00;
-    parameter YELLOW_STATE = 2'b01;
-    parameter GREEN_STATE  = 2'b10;
-
+    parameter S0 = 3'b000; // Highway Green, Country Red
+    parameter S1 = 3'b001; // Highway Yellow, Country Red
+    parameter S2 = 3'b010; // Highway Red, Country Red
+    parameter S3 = 3'b011; // Highway Red, Country Green
+    parameter S4 = 3'b100; // Highway Red, Country Yellow
+    parameter HOLD = 100000000; // 1 second at 100 MHz
+ 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            state <= RED_STATE;
+            state   <= S0;
             counter <= 0;
-        end else if (emergency) begin
-            state <= GREEN_STATE;
         end else begin
-            counter <= counter + 1;
             case (state)
-                RED_STATE: if (counter == 100000000) begin
-                    state <= GREEN_STATE;
+                S0: if (x) begin
+                    state   <= S1;
                     counter <= 0;
                 end
-                GREEN_STATE: if (counter == 100000000) begin
-                    state <= YELLOW_STATE;
+                S1: begin
+                    counter <= counter + 1;
+                    if (counter == HOLD) begin
+                        state   <= S2;
+                        counter <= 0;
+                    end
+                end
+                S2: begin
+                    counter <= counter + 1;
+                    if (counter == HOLD) begin
+                        state   <= S3;
+                        counter <= 0;
+                    end
+                end
+                S3: if (!x) begin
+                    state   <= S4;
                     counter <= 0;
                 end
-                YELLOW_STATE: if (counter == 50000000) begin
-                    state <= RED_STATE;
-                    counter <= 0;
+                S4: begin
+                    counter <= counter + 1;
+                    if (counter == HOLD) begin
+                        state   <= S0;
+                        counter <= 0;
+                    end
                 end
+                default: state <= S0;
             endcase
         end
     end
-
+ 
+    // Output logic: rgb1/rgb2 bit order = R(bit0), G(bit1), B(bit2)
     always @(*) begin
-        red    = (state == RED_STATE);
-        yellow = (state == YELLOW_STATE);
-        green  = (state == GREEN_STATE);
+        rgb1 = 3'b000;
+        rgb2 = 3'b000;
+        case (state)
+            S0: begin rgb1 = 3'b010; rgb2 = 3'b001; end // hwy green, ctr red
+            S1: begin rgb1 = 3'b011; rgb2 = 3'b001; end // hwy yellow, ctr red
+            S2: begin rgb1 = 3'b001; rgb2 = 3'b001; end // hwy red, ctr red
+            S3: begin rgb1 = 3'b001; rgb2 = 3'b010; end // hwy red, ctr green
+            S4: begin rgb1 = 3'b001; rgb2 = 3'b011; end // hwy red, ctr yellow
+        endcase
     end
-
 endmodule
+
 ```
 
 ---
 
-### 🔹 Testbench (`traffic_controller_tb.v`)
-This file simulates different input scenarios — normal operation and emergency overrides.
-
+### Testbench (`traffic_controller_tb.v`)
+Simulates reset, a vehicle arriving and triggering the full S0→S4 cycle, and a second cycle to confirm repeatability.
+ 
 ```verilog
 `timescale 1ns/1ps
 module traffic_controller_tb();
-
-    reg clk, reset, emergency;
-    wire red, yellow, green;
-
+    reg clk, reset, x;
+    wire [2:0] rgb1, rgb2;
+ 
     traffic_controller uut (
-        .clk(clk),
-        .reset(reset),
-        .emergency(emergency),
-        .red(red),
-        .yellow(yellow),
-        .green(green)
+        .clk(clk), .reset(reset), .x(x),
+        .rgb1(rgb1), .rgb2(rgb2)
     );
-
-    always #5 clk = ~clk;  // 10ns clock
-
+ 
+    always #5 clk = ~clk;
     initial begin
-        $display("Simulation started");
-        clk = 0; reset = 1; emergency = 0;
-        #10 reset = 0;
-
-        // Normal cycle
-        #200;
-
-        // Emergency override
-        emergency = 1;
-        #50 emergency = 0;
-
-        #200;
+        clk = 0; reset = 1; x = 0;
+        #20 reset = 0;
+        #100;
+        x = 1;
+        #2_000_000_100;
+        x = 0;
+        #1_000_000_100;
+        x = 1;
+        #2_000_000_100;
+        x = 0;
+        #1_000_000_100;
         $display("Simulation completed");
         $stop;
     end
-
 endmodule
 ```
 
