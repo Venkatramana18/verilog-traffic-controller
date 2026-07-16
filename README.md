@@ -1,38 +1,35 @@
-# 🚦 FPGA-Based Traffic Light Controller with Priority System
+# 🚦FPGA-Based Traffic Light Controller (Highway / Country Road Intersection)
 
 ## 🧠 Project Overview
-This project focuses on designing and implementing a **Traffic Light Controller with Priority System** using **Verilog HDL** on an **FPGA platform**.  
-The goal is to create a **smart traffic management system** that not only handles the regular traffic light sequence but also provides a **priority override** for emergency vehicles like ambulances and fire trucks.
+This project implements a **vehicle-triggered traffic light controller** for a highway/country-road intersection using Verilog HDL on a Xilinx Spartan-7 FPGA (Arty S7-50).
 
-The design is implemented, simulated, and verified using **Xilinx Vivado Design Suite**, ensuring correct sequencing, timing, and control logic.  
-This project demonstrates how FPGA-based systems can be utilized for **real-time, hardware-level decision-making** in modern urban infrastructure.
+Unlike a simple fixed-timer traffic light, this design uses a vehicle sensor input to decide when the country road gets a green light, so the highway stays green by default and only yields when a vehicle is actually waiting. The design is implemented, simulated, and verified in Xilinx Vivado.
 
 ---
 
 ## 🎯 Objectives
-- To design a **digital traffic control system** using Verilog HDL.  
-- To implement **Red, Yellow, and Green light** sequencing with accurate timing.  
-- To integrate a **priority mechanism** for emergency vehicles.  
-- To perform simulation and functional verification using **Vivado Simulator**.  
-- To analyze the **RTL schematic** and understand hardware-level behavior.  
-- To provide an efficient, low-latency, and hardware-driven traffic management logic.
+- Design a digital traffic control FSM using Verilog HDL.
+- Implement Red, Yellow, and Green sequencing with accurate timing.
+- Use a vehicle sensor input to trigger the country road's turn, instead of a fixed round-robin timer.
+- Drive both intersection lights from on-board RGB LEDs.
+- Perform simulation and functional verification using the Vivado Simulator.
+
 
 ---
+## 🚥 System Description
 
-## 🧩 System Description
-
-### 🚥 Normal Operation
-The controller cycles through three states:
-1. **RED** → Stop vehicles.
-2. **YELLOW** → Prepare to move.
-3. **GREEN** → Allow vehicles to go.
-
-Each state is maintained for a specified time delay, controlled by an internal counter.
-
-### 🚨 Priority System
-When an **emergency vehicle signal** is detected:
-- The controller **immediately gives priority** by turning **GREEN** on the emergency lane.
-- Once the emergency signal is cleared, the system **returns to normal sequencing**.
+### Normal Operation
+The highway light stays **green** by default. The controller only advances when the vehicle sensor (`x`) detects a car waiting at the country road.
+ 
+| State | Highway Light | Country Road Light | Condition to Advance |
+|-------|---------------|---------------------|------------------------|
+| S0 | Green | Red | Vehicle detected (`x == 1`) |
+| S1 | Yellow | Red | 1 second elapsed |
+| S2 | Red | Red | 1 second elapsed |
+| S3 | Red | Green | Vehicle leaves (`x == 0`) |
+| S4 | Red | Yellow | 1 second elapsed |
+ 
+After S4, the FSM returns to S0 and the highway goes green again.
 
 ---
 
