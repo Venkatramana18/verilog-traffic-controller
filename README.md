@@ -183,11 +183,12 @@ endmodule
 
 | Photo | State shown |
 |-------|-------------|
-| ![Board idle](docs/images/board-idle.jpg) | Board powered on, bitstream loaded, both RGB LEDs off/idle before the first vehicle trigger |
-| ![Highway green, country red](docs/images/state-s0.jpg) | `RGB0` green, `RGB1` red — S0: highway green, country road red |
-| ![Both red](docs/images/state-buffer.jpg) | Both `RGB0` and `RGB1` red — buffer state between phases |
-| ![Highway red, country green](docs/images/state-s3.jpg) | `RGB0` red, `RGB1` green — country road has the green light |
-| ![Yellow transition](docs/images/state-yellow.jpg) | `RGB0`/`RGB1` showing amber (red+green together) — a yellow transition state |
+| ![Highway green, country red](docs/images/state-s0.jpg) | **S0 — Highway green.** `RGB0` green, `RGB1` red. Default resting state; holds until the vehicle sensor detects a car at the country road. |
+| ![Highway yellow, country red](docs/images/state-s1.jpg) | **S1 — Highway yellow.** `RGB0` amber (red+green), `RGB1` red. 1-second warning phase before the highway goes red. |
+| ![Both red](docs/images/state-s2.jpg) | **S2 — Both red (buffer).** `RGB0` and `RGB1` both red. 1-second all-red safety buffer before the country road gets green. |
+| ![Highway red, country green](docs/images/state-s3.jpg) | **S3 — Country green.** `RGB0` red, `RGB1` green. Holds as long as the vehicle sensor stays high, not on a timer. |
+| ![Highway red, country yellow](docs/images/state-s4.jpg) | **S4 — Country yellow.** `RGB0` red, `RGB1` amber (red+green). 1-second warning phase before returning to S0. |
+
 ---
 
 ## 📈 Simulation Results
