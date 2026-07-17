@@ -223,6 +223,22 @@ RTL SCHEMATIC DIAGRAM AFTER SYNTHESIS:
 DEVICE LAYOUT AFTER IMPLEMENTATION
 <img width="1631" height="987" alt="image" src="https://github.com/user-attachments/assets/5f06ff12-a46d-40b9-b6a2-07cb670de9a0" />
 
+IMPLEMENTATION ON FPGA
+
+This photo shows S0 — highway road green, country road red.
+<img width="1600" height="720" alt="state-s0 jpg" src="https://github.com/user-attachments/assets/36453eef-7244-4ff6-97b4-733fc6ad33a1" />
+
+This photo shows S1 — highway road yellow, country road red.
+<img width="1600" height="720" alt="WhatsApp Image 2026-07-17 at 2 12 04 AM" src="https://github.com/user-attachments/assets/e1f278aa-1d43-42c4-96b7-e2243323fe52" />
+
+This photo shows S2 — highway road red, country road red.
+<img width="1600" height="720" alt="WhatsApp Image 2026-07-17 at 2 12 03 AM (1)" src="https://github.com/user-attachments/assets/158e8f6e-a6dd-4f1f-b977-eeaac7771b92" />
+
+This photo shows S3 — highway road red, country road green.
+<img width="1600" height="720" alt="WhatsApp Image 2026-07-17 at 2 12 03 AM" src="https://github.com/user-attachments/assets/f73b39ec-0f1e-472d-a378-f15a93bdbccf" />
+
+This photo shows S4 — highway road red, country road yellow.
+<img width="1600" height="720" alt="WhatsApp Image 2026-07-17 at 2 12 03 AM (2)" src="https://github.com/user-attachments/assets/44bc9761-1e04-4bca-a173-3afa3fe6de53" />
 
 
 ---
