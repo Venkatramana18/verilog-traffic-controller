@@ -18,7 +18,6 @@ Unlike a simple fixed-timer traffic light, this design uses a vehicle sensor inp
 ---
 ## 🚥 System Description
 
-### Normal Operation
 The highway light stays **green** by default. The controller only advances when the vehicle sensor (`x`) detects a car waiting at the country road.
  
 | State | Highway Light | Country Road Light | Condition to Advance |
@@ -180,15 +179,6 @@ module traffic_controller_tb();
 endmodule
 ```
 
-
-| Photo | State shown |
-|-------|-------------|
-| ![Highway green, country red](docs/images/state-s0.jpg) | **S0 — Highway green.** `RGB0` green, `RGB1` red. Default resting state; holds until the vehicle sensor detects a car at the country road. |
-| ![Highway yellow, country red](docs/images/state-s1.jpg) | **S1 — Highway yellow.** `RGB0` amber (red+green), `RGB1` red. 1-second warning phase before the highway goes red. |
-| ![Both red](docs/images/state-s2.jpg) | **S2 — Both red (buffer).** `RGB0` and `RGB1` both red. 1-second all-red safety buffer before the country road gets green. |
-| ![Highway red, country green](docs/images/state-s3.jpg) | **S3 — Country green.** `RGB0` red, `RGB1` green. Holds as long as the vehicle sensor stays high, not on a timer. |
-| ![Highway red, country yellow](docs/images/state-s4.jpg) | **S4 — Country yellow.** `RGB0` red, `RGB1` amber (red+green). 1-second warning phase before returning to S0. |
-
 ---
 
 ## 📈 Simulation Results
@@ -255,6 +245,7 @@ The **FPGA-Based Traffic Light Controller** was successfully designed and simula
 The system correctly performed sequential light transitions and responded to the vehicle sensor input, holding the highway green until a vehicle was detected and returning to it once the country road cleared.
 This design can be extended to include **pedestrian crossing states**, **multiple intersections**, and **adaptive timing based on traffic density** for smart city applications.
 
+---
 
 ## 🧑‍💻 Author
 **Venkat Ramana S B**  
